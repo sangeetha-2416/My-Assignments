@@ -18,13 +18,13 @@ test('Launch Salesforce and Login', async () => {
     await page.goto(`https://login.salesforce.com/`);
 
     // Enter the username
-     page.locator(`#username`).fill(`demonsalesmanager`);
+    await page.locator(`#username`).fill(`demonsalesmanager`);
 
     // Enter the password.
-     page.locator(`#password`).fill(`crmsfa`);
+    await page.locator(`#password`).fill(`crmsfa`);
 
     // Click the Login button.
-     page.locator(`#Login`).click();
+     await page.locator(`#Login`).click();
 
     //Wait for 10 seconds
     await page.waitForTimeout(10000);
