@@ -1,17 +1,37 @@
-import test from "@playwright/test";
 
-test("Learn locating strategy using CSS selector",async({page})=> {
-    
-    await page.goto(`https://login.salesforce.com/`)
-     page.locator(`#username`).fill(`demonsalesmanager`)
-    await page.waitForTimeout(2000)
-     page.locator(`#password`).fill(`crmsfa`)
-     page.locator(`#Login`).click
-    await page.waitForTimeout(10000)
-    const pageTitle=await page.title()
-    console.log(`Title: ${pageTitle}`)
-    const currenturl =page.url()
-    console.log(`URL: ${currenturl}`)
+import { test, chromium } from '@playwright/test';
 
+test('Launch Salesforce and Login', async () => {
 
-})
+    // Launch Chromium browser in non-headless mode
+    const browser = await chromium.launch({ channel: "chrome",
+        headless: false
+    });
+
+    // Create a new browser context.
+    const context = await browser.newContext();
+
+    // Open a new page within the browser context.
+    const page = await context.newPage();
+
+    // Load the URL
+    await page.goto(`https://login.salesforce.com/`);
+
+    // Enter the username
+     page.locator(`#username`).fill(`demonsalesmanager`);
+
+    // Enter the password.
+     page.locator(`#password`).fill(`crmsfa`);
+
+    // Click the Login button.
+     page.locator(`#Login`).click();
+
+    //Wait for 10 seconds
+    await page.waitForTimeout(10000);
+
+    // Print the page title and the current url of the page
+    console.log(page.url(), page.title());
+
+    // Close browser
+    await browser.close();
+});
